@@ -1,0 +1,14 @@
+{
+  "name": "sa-car-delivery-summary",
+  "version": "1.0.0",
+  "description": "Real-time SA car delivery and transfer summary",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.2"
+  }
+}

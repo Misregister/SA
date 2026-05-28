@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA Car Delivery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Mitr:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated background orbs -->
+    <div class="bg-orbs" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="app-shell">
+        <!-- Top Navigation Bar -->
+        <nav class="topbar">
+            <div class="topbar-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>SA Delivery</h1>
+                    <div class="sync-status">
+                        <span id="sync-indicator" class="status-dot"></span>
+                        <span id="last-sync-time">กำลังโหลด...</span>
+                        <span id="countdown-timer" class="countdown">(30s)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <div class="live-clock" id="user-profile-display" style="display:none;">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span id="display-name"></span>
+                </div>
+                <div class="live-clock">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span id="current-time">00:00:00</span>
+                </div>
+                <button id="btn-sync" class="topbar-btn" title="ซิงค์ข้อมูล"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button id="btn-morning-summary" class="topbar-btn accent" title="คัดลอกสรุปเช้า"><i class="fa-regular fa-copy"></i></button>
+                <button id="btn-settings" class="topbar-btn" title="แก้ไขโปรไฟล์"><i class="fa-solid fa-user-gear"></i></button>
+            </div>
+        </nav>
+
+        <!-- KPI Stats Row -->
+        <section class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-label">งานทั้งหมด</span>
+                    <span class="stat-number" id="kpi-total">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon personal">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-label">งานส่วนตัว</span>
+                    <span class="stat-number" id="kpi-personal">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon fleet">
+                    <i class="fa-solid fa-people-carry-box"></i>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-label">งาน Fleet</span>
+                    <span class="stat-number" id="kpi-fleet">0</span>
+                </div>
+            </div>
+            <div class="stat-card clickable" id="btn-show-notifications">
+                <div class="stat-icon notify">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="notif-badge" id="notification-badge" style="display:none;">0</span>
+                </div>
+                <div class="stat-body">
+                    <span class="stat-label">แจ้งเตือน</span>
+                    <span class="stat-number" id="kpi-notifications">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jobs Feed -->
+        <main class="feed" id="jobs-list">
+            <div class="loading-state">
+                <div class="loader"></div>
+                <p>กำลังโหลดแผนงาน...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay active" id="settings-modal">
+        <div class="modal-card">
+            <div class="modal-top">
+                <div class="modal-icon-wrap"><i class="fa-solid fa-id-badge"></i></div>
+                <h2>ตั้งค่าโปรไฟล์</h2>
+                <p class="modal-desc">กรุณากรอกชื่อจริงและชื่อเล่นของคุณ เพื่อให้ระบบแสดงแผนงานเฉพาะของคุณเท่านั้น</p>
+                <button class="close-modal modal-close-btn" id="btn-close-modal" data-target="settings-modal" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-form">
+                <div class="field">
+                    <label class="field-label" for="input-realname">ชื่อจริง</label>
+                    <div class="field-input-wrap">
+                        <i class="fa-solid fa-signature"></i>
+                        <input type="text" id="input-realname" placeholder="เช่น สมชาย" class="input-field">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="field-label" for="input-nickname">ชื่อเล่น</label>
+                    <div class="field-input-wrap">
+                        <i class="fa-solid fa-face-smile"></i>
+                        <input type="text" id="input-nickname" placeholder="เช่น บอย" class="input-field">
+                    </div>
+                </div>
+                <button id="btn-save-profile" class="btn-glow">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    บันทึกและเข้าสู่ระบบ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Drawer -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <aside class="drawer" id="notification-sidebar">
+        <div class="drawer-header">
+            <h2><i class="fa-solid fa-bell"></i> แจ้งเตือน</h2>
+            <button class="close-sidebar topbar-btn" id="btn-close-sidebar"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="drawer-body" id="notification-history">
+            <div class="empty-state">ยังไม่มีการแจ้งเตือน</div>
+        </div>
+    </aside>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
